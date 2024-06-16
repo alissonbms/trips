@@ -12,7 +12,7 @@ const QuickSearch = () => {
         <div className="w-full h-[1px] bg-grayLighter" />
       </div>
 
-      <div className="flex w-full justify-between mt-5">
+      <div className="flex w-full justify-between mt-8">
         <SearchIcon url="/hotel-icon.png" title="Hotel" />
         <SearchIcon url="/farm-icon.png" title="Fazenda" />
         <SearchIcon url="/cottage-icon.png" title="Chalé" />
