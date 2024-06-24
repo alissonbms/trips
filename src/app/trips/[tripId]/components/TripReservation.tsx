@@ -3,31 +3,37 @@
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
-import { Trip } from "@prisma/client";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
 interface TripReservationProps {
-  trip: Trip;
+  maxGuests: number;
+  tripStartDate: Date;
+  tripEndDate: Date;
 }
 
 interface TripReservationForm {
   guests: number;
-  endDate: Date | null;
-  startDate: Date | null;
+  endDate: Date;
+  startDate: Date;
 }
 
-const TripReservation = ({ trip }: TripReservationProps) => {
+const today = new Date();
+
+const TripReservation = ({ maxGuests }: TripReservationProps) => {
   const {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm<TripReservationForm>();
 
   const onSubmit = (data: any) => {
     console.log({ data });
   };
+
+  const startDate = watch("startDate");
 
   return (
     <div className="flex flex-col px-5">
@@ -49,6 +55,7 @@ const TripReservation = ({ trip }: TripReservationProps) => {
               onChange={field.onChange}
               selected={field.value}
               className="w-full"
+              minDate={today}
             />
           )}
         />
@@ -66,6 +73,8 @@ const TripReservation = ({ trip }: TripReservationProps) => {
               onChange={field.onChange}
               selected={field.value}
               className="w-full"
+              minDate={startDate ?? today}
+              disabled={startDate ? false : true}
             />
           )}
         />
@@ -79,7 +88,7 @@ const TripReservation = ({ trip }: TripReservationProps) => {
         })}
         error={!!errors?.guests}
         errorMessage={errors?.guests?.message}
-        placeholder={`Número de hospedes (max: ${trip.maxGuests})`}
+        placeholder={`Número de hospedes (max: ${maxGuests})`}
         className="mt-4"
       />
       <div className="flex justify-between mt-3">
