@@ -10,6 +10,7 @@ interface TripReservationProps {
   maxGuests: number;
   tripStartDate: Date;
   tripEndDate: Date;
+  pricePerDay: number;
 }
 
 interface TripReservationForm {
@@ -19,8 +20,9 @@ interface TripReservationForm {
 }
 
 const today = new Date();
+const { differenceInDays, addDays } = require("date-fns");
 
-const TripReservation = ({ maxGuests }: TripReservationProps) => {
+const TripReservation = ({ maxGuests, pricePerDay }: TripReservationProps) => {
   const {
     register,
     handleSubmit,
@@ -34,6 +36,7 @@ const TripReservation = ({ maxGuests }: TripReservationProps) => {
   };
 
   const startDate = watch("startDate");
+  const endDate = watch("endDate");
 
   return (
     <div className="flex flex-col px-5">
@@ -73,7 +76,7 @@ const TripReservation = ({ maxGuests }: TripReservationProps) => {
               onChange={field.onChange}
               selected={field.value}
               className="w-full"
-              minDate={startDate ?? today}
+              minDate={addDays(startDate, 1) ?? addDays(today, 1)}
               disabled={startDate ? false : true}
             />
           )}
@@ -93,7 +96,11 @@ const TripReservation = ({ maxGuests }: TripReservationProps) => {
       />
       <div className="flex justify-between mt-3">
         <p className="font-medium text-sm text-primaryDarker">Total: </p>
-        <p className="font-medium text-sm text-primaryDarker">R$2.550</p>
+        <p className="font-medium text-sm text-primaryDarker">
+          {startDate && endDate
+            ? `R$${differenceInDays(endDate, startDate) * pricePerDay}`
+            : "R$0"}
+        </p>
       </div>
       <div className="pb-10 border-b border-b-grayLighter w-full">
         <Button
