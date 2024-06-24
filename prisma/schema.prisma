@@ -33,8 +33,8 @@ model Trip {
 
 model TripReservation {
   id        String   @id @default(uuid())
-  startDate DateTime
-  endDate   DateTime
+  start DateTime
+  end   DateTime
   totalPaid Decimal  @db.Decimal(8, 2)
 
   tripId String

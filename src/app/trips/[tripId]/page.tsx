@@ -16,8 +16,23 @@ const getTripDetails = async (tripId: string) => {
   return tripDetails;
 };
 
+const getTripReservationRange = async (tripId: string) => {
+  const tripRange = prisma.tripReservation.findMany({
+    where: {
+      tripId: tripId,
+    },
+    select: {
+      start: true,
+      end: true,
+    },
+  });
+
+  return tripRange;
+};
+
 const TripDetails = async ({ params }: { params: { tripId: string } }) => {
   const trip = await getTripDetails(params.tripId);
+  const range = await getTripReservationRange(params.tripId);
 
   if (!trip) {
     return null;
@@ -27,10 +42,12 @@ const TripDetails = async ({ params }: { params: { tripId: string } }) => {
     <div className="container mx-auto">
       <TripHeader trip={trip} />
       <TripReservation
+        tripId={trip.id}
         maxGuests={trip.maxGuests}
         tripStartDate={trip.startDate}
         tripEndDate={trip.endDate}
         pricePerDay={trip.pricePerDay as any}
+        range={range}
       />
       <TripDescription description={trip.description} />
       <TripHighlights highlights={trip.highlights} />

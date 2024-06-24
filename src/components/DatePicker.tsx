@@ -28,6 +28,7 @@ function Input(
   return (
     <div className="flex w-full flex-col">
       <DatePicker
+        dateFormat={"dd/MM/yyyy"}
         locale="pt-BR"
         wrapperClassName="w-full"
         className={inputClassName}

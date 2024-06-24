@@ -7,10 +7,15 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
 interface TripReservationProps {
+  tripId: string;
   maxGuests: number;
   tripStartDate: Date;
   tripEndDate: Date;
   pricePerDay: number;
+  range: {
+    start: Date;
+    end: Date;
+  }[];
 }
 
 interface TripReservationForm {
@@ -20,19 +25,48 @@ interface TripReservationForm {
 }
 
 const today = new Date();
-const { differenceInDays, addDays } = require("date-fns");
+const { differenceInDays } = require("date-fns");
 
-const TripReservation = ({ maxGuests, pricePerDay }: TripReservationProps) => {
+const TripReservation = ({
+  tripId,
+  maxGuests,
+  pricePerDay,
+  range,
+}: TripReservationProps) => {
   const {
     register,
     handleSubmit,
     control,
     watch,
+    setError,
     formState: { errors },
   } = useForm<TripReservationForm>();
 
-  const onSubmit = (data: any) => {
-    console.log({ data });
+  const onSubmit = async (data: TripReservationForm) => {
+    const response = await fetch("http://localhost:3000/api/trips/check", {
+      method: "POST",
+      body: Buffer.from(
+        JSON.stringify({
+          tripId,
+          startDate: data.startDate,
+          endDate: data.endDate,
+        })
+      ),
+    });
+
+    const res = await response.json();
+
+    if (res?.error?.code === "TRIP_ALREADY_RESERVED") {
+      setError("startDate", {
+        type: "manual",
+        message: "Esta data já esta reservada.",
+      });
+
+      setError("endDate", {
+        type: "manual",
+        message: "Esta data já esta reservada.",
+      });
+    }
   };
 
   const startDate = watch("startDate");
@@ -52,12 +86,16 @@ const TripReservation = ({ maxGuests, pricePerDay }: TripReservationProps) => {
           control={control}
           render={({ field }) => (
             <DatePicker
+              excludeDateIntervals={range}
               error={!!errors?.startDate}
               errorMessage={errors?.startDate?.message}
               placeholderText="Data de Início"
               onChange={field.onChange}
               selected={field.value}
               className="w-full"
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
               minDate={today}
             />
           )}
@@ -70,13 +108,17 @@ const TripReservation = ({ maxGuests, pricePerDay }: TripReservationProps) => {
           control={control}
           render={({ field }) => (
             <DatePicker
+              excludeDateIntervals={range}
               error={!!errors?.endDate}
               errorMessage={errors?.endDate?.message}
               placeholderText="Data Final"
               onChange={field.onChange}
               selected={field.value}
               className="w-full"
-              minDate={addDays(startDate, 1) ?? addDays(today, 1)}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate ?? today}
               disabled={startDate ? false : true}
             />
           )}
@@ -98,7 +140,10 @@ const TripReservation = ({ maxGuests, pricePerDay }: TripReservationProps) => {
         <p className="font-medium text-sm text-primaryDarker">Total: </p>
         <p className="font-medium text-sm text-primaryDarker">
           {startDate && endDate
-            ? `R$${differenceInDays(endDate, startDate) * pricePerDay}`
+            ? `R$${
+                differenceInDays(endDate, startDate) * pricePerDay +
+                1 * pricePerDay
+              }`
             : "R$0"}
         </p>
       </div>
