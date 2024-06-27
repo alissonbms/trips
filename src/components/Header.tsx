@@ -26,7 +26,7 @@ const Header = () => {
 
       {status === "unauthenticated" && (
         <button
-          className="text-primary text-sm font-semibold"
+          className="text-primary text-sm font-semibold border p-3 rounded-lg"
           onClick={handleLoginClick}
         >
           Login
@@ -49,13 +49,21 @@ const Header = () => {
           />
 
           {menuIsOpen && (
-            <div className="z-50 absolute top-14 left-0 bg-white shadow-md w-full h-full flex flex-col items-center justify-center rounded-lg">
-              <button
-                className="text-primary text-sm font-semibold"
-                onClick={handleLogoutClick}
-              >
-                Logout
-              </button>
+            <div className="z-50 absolute top-12 left-0 bg-white shadow-md w-full h-[90px] flex flex-col items-center justify-center rounded-2xl border border-solid border-grayLighter ">
+              <div className="flex flex-col gap-2">
+                <Link href="/my-trips">
+                  <button className="text-primary text-sm font-semibold pb-2 border-b border-solid border-grayLighter">
+                    Minhas reservas
+                  </button>
+                </Link>
+
+                <button
+                  className="text-primary text-sm font-semibold"
+                  onClick={handleLogoutClick}
+                >
+                  Logout
+                </button>
+              </div>
             </div>
           )}
         </div>
