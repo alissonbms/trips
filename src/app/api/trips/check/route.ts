@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, endOfDay, isBefore, startOfDay } from "date-fns";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -18,6 +18,32 @@ export async function POST(request: Request) {
           code: "TRIP_NOT_FOUND",
         },
       })
+    );
+  }
+
+  if (isBefore(new Date(req.startDate), startOfDay(new Date()))) {
+    return new NextResponse(
+      JSON.stringify({
+        error: {
+          code: "INVALID_START_DATE",
+        },
+      }),
+      {
+        status: 400,
+      }
+    );
+  }
+
+  if (isBefore(endOfDay(new Date(req.endDate)), new Date(req.startDate))) {
+    return new NextResponse(
+      JSON.stringify({
+        error: {
+          code: "INVALID_END_DATE",
+        },
+      }),
+      {
+        status: 400,
+      }
     );
   }
 
