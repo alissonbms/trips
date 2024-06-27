@@ -31,16 +31,21 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
       });
 
       const res = await response.json();
+
+      if (res?.error) {
+        return router.push("/");
+      }
+
       setTrip(res.trip);
       setTotalPrice(res.totalPrice);
     };
 
     if (status === "unauthenticated") {
-      router.push("/");
+      return router.push("/");
     }
 
     fetchTrip();
-  }, [status]);
+  }, [status, searchParams, params, router]);
 
   if (!trip) {
     return null;
