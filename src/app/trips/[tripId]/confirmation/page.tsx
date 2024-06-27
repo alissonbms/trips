@@ -1,19 +1,23 @@
 "use client";
 
-import { Trip } from "@prisma/client";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import ptBR from "date-fns/locale/pt-BR";
 import { format } from "date-fns";
+import { useSession } from "next-auth/react";
+
 import Button from "@/components/Button";
+import { Trip } from "@prisma/client";
 
 const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
+  const { status } = useSession();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [trip, setTrip] = useState<Trip | null>();
   const [totalPrice, setTotalPrice] = useState<number>(0);
-
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     const fetchTrip = async () => {
@@ -31,8 +35,12 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
       setTotalPrice(res.totalPrice);
     };
 
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+
     fetchTrip();
-  }, []);
+  }, [status]);
 
   if (!trip) {
     return null;
@@ -44,7 +52,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
 
   return (
     <div className="container mx-auto p-5">
-      <h1 className="font-semibold text-xl text-primaryDarker">Sua viagem</h1>
+      <h1 className="font-semibold text-xl text-primaryDarker">Sua viagem:</h1>
       <div className="flex-flex-col p-5 mt-5 border border-solid border-grayLighter shadow-lg rounded-lg">
         <div className="flex items-center gap-3 pb-5 border-b border-solid border-grayLighter">
           <div className="relative h-[106px] w-[123px]">
@@ -61,7 +69,9 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
             </h2>
             <div className="flex items-center gap-1 my-1">
               <ReactCountryFlag countryCode={trip.countryCode} svg />
-              <p className="text-xs text-grayPrimary">{trip.location}</p>
+              <p className="text-xs text-grayPrimary underline">
+                {trip.location}
+              </p>
             </div>
           </div>
         </div>
