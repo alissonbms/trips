@@ -1,8 +1,25 @@
 import { prisma } from "@/lib/prisma";
+import { differenceInDays } from "date-fns";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const req = await request.json();
+
+  const trip = await prisma.trip.findUnique({
+    where: {
+      id: req.tripId,
+    },
+  });
+
+  if (!trip) {
+    return new NextResponse(
+      JSON.stringify({
+        error: {
+          code: "TRIP_NOT_FOUND",
+        },
+      })
+    );
+  }
 
   const reservations = await prisma.tripReservation.findMany({
     where: {
@@ -29,6 +46,11 @@ export async function POST(request: Request) {
   return new NextResponse(
     JSON.stringify({
       success: true,
+      trip,
+      totalPrice:
+        differenceInDays(new Date(req.endDate), new Date(req.startDate)) *
+          Number(trip.pricePerDay) +
+        1 * Number(trip.pricePerDay),
     })
   );
 }

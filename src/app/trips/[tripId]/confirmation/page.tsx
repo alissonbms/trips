@@ -1,0 +1,95 @@
+"use client";
+
+import { Trip } from "@prisma/client";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import ReactCountryFlag from "react-country-flag";
+import ptBR from "date-fns/locale/pt-BR";
+import { format } from "date-fns";
+import Button from "@/components/Button";
+
+const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
+  const [trip, setTrip] = useState<Trip | null>();
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const fetchTrip = async () => {
+      const response = await fetch("http://localhost:3000/api/trips/check", {
+        method: "POST",
+        body: JSON.stringify({
+          tripId: params.tripId,
+          startDate: searchParams.get("startDate"),
+          endDate: searchParams.get("endDate"),
+        }),
+      });
+
+      const res = await response.json();
+      setTrip(res.trip);
+      setTotalPrice(res.totalPrice);
+    };
+
+    fetchTrip();
+  }, []);
+
+  if (!trip) {
+    return null;
+  }
+
+  const startDate = new Date(searchParams.get("startDate") as string);
+  const endDate = new Date(searchParams.get("endDate") as string);
+  const guests = searchParams.get("guests");
+
+  return (
+    <div className="container mx-auto p-5">
+      <h1 className="font-semibold text-xl text-primaryDarker">Sua viagem</h1>
+      <div className="flex-flex-col p-5 mt-5 border border-solid border-grayLighter shadow-lg rounded-lg">
+        <div className="flex items-center gap-3 pb-5 border-b border-solid border-grayLighter">
+          <div className="relative h-[106px] w-[123px]">
+            <Image
+              src={trip?.coverImage}
+              alt={trip?.name}
+              fill
+              className="rounded-lg object-cover"
+            />
+          </div>
+          <div className="flex flex-col">
+            <h2 className="text-xl font-semibold text-primaryDarker">
+              {trip.name}
+            </h2>
+            <div className="flex items-center gap-1 my-1">
+              <ReactCountryFlag countryCode={trip.countryCode} svg />
+              <p className="text-xs text-grayPrimary">{trip.location}</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold text-primaryDarker mt-3">
+          Informações do preço:
+        </h3>
+        <div className="flex justify-between mt-1">
+          <p className="text-primaryDarker">Total: </p>
+          <p className="font-medium">R${totalPrice} </p>
+        </div>
+      </div>
+
+      <div className="flex flex-col text-primaryDarker mt-5">
+        <h3 className="font-semibold">Data:</h3>
+        <div className="flex items-center gap-2 mt-1">
+          <p>{format(startDate, "dd 'de' MMMM", { locale: ptBR })}</p>
+          {"-"}
+          <p>{format(endDate, "dd 'de' MMMM", { locale: ptBR })}.</p>
+        </div>
+
+        <h3 className="font-semibold mt-5">Hóspedes:</h3>
+        <p className="mt-1">{guests} hóspedes.</p>
+
+        <Button className="mt-5">Finalizar Compra</Button>
+      </div>
+    </div>
+  );
+};
+
+export default TripConfirmation;

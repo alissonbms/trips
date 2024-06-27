@@ -3,8 +3,10 @@
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { differenceInDays } from "date-fns";
 
 interface TripReservationProps {
   tripId: string;
@@ -25,7 +27,6 @@ interface TripReservationForm {
 }
 
 const today = new Date();
-const { differenceInDays } = require("date-fns");
 
 const TripReservation = ({
   tripId,
@@ -33,6 +34,8 @@ const TripReservation = ({
   pricePerDay,
   range,
 }: TripReservationProps) => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -62,11 +65,17 @@ const TripReservation = ({
         message: "Esta data já esta reservada.",
       });
 
-      setError("endDate", {
+      return setError("endDate", {
         type: "manual",
         message: "Esta data já esta reservada.",
       });
     }
+
+    router.push(
+      `/trips/${tripId}/confirmation?startDate=${data.startDate.toISOString()}&endDate=${data.endDate.toISOString()}&guests=${
+        data.guests
+      }`
+    );
   };
 
   const startDate = watch("startDate");
