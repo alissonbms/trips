@@ -1,10 +1,12 @@
 import Button from "@/components/Button";
-import { Prisma, TripReservation } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 import ReactCountryFlag from "react-country-flag";
+import { toast } from "react-toastify";
 
 interface UserReservationProps {
   reservation: Prisma.TripReservationGetPayload<{
@@ -15,7 +17,37 @@ interface UserReservationProps {
 }
 
 const UserReservationItem = ({ reservation }: UserReservationProps) => {
+  const router = useRouter();
+
   const { trip } = reservation;
+
+  const handleDeleteClick = async () => {
+    const response = await fetch(
+      `http://localhost:3000/api/trips/reservation/${reservation.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!response.ok) {
+      return toast.error("Ocorreu um erro ao tentar cancelar a reserva!", {
+        position: "bottom-center",
+      });
+    }
+
+    toast.success(
+      <div className="flex flex-col items-center justify-center">
+        <p>Reserva de viagem até:</p>
+        <span className="font-semibold">{reservation.trip.name}</span>
+        <p> cancelada com sucesso</p>
+      </div>,
+      {
+        position: "bottom-center",
+      }
+    );
+
+    router.refresh();
+  };
   return (
     <div className="flex-flex-col p-5 mt-5 border border-solid border-grayLighter shadow-lg rounded-lg">
       <div className="flex items-center gap-3 pb-5 border-b border-solid border-grayLighter">
@@ -69,7 +101,11 @@ const UserReservationItem = ({ reservation }: UserReservationProps) => {
         <p className="font-medium text-sm">R${Number(reservation.totalPaid)}</p>
       </div>
 
-      <Button variant="danger" className=" w-full mt-5">
+      <Button
+        variant="danger"
+        className=" w-full mt-5"
+        onClick={handleDeleteClick}
+      >
         Cancelar
       </Button>
     </div>
