@@ -68,6 +68,7 @@ export async function GET(request: Request) {
   const endDate = new Date(searchParams.get("endDate") as string);
   const budget = searchParams.get("budget") as string;
   const guests = searchParams.get("guests") as string;
+  const quick = searchParams.get("quick") as string;
 
   if (!text) {
     return new NextResponse(
@@ -81,6 +82,10 @@ export async function GET(request: Request) {
   const trips = await prisma.trip.findMany({
     where: generateSearchQuery(text, budget, guests),
   });
+
+  if (quick) {
+    return new NextResponse(JSON.stringify(trips), { status: 200 });
+  }
 
   if (isBefore(new Date(startDate), startOfDay(new Date()))) {
     return new NextResponse(

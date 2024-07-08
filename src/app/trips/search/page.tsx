@@ -15,13 +15,13 @@ const Trips = () => {
   useEffect(() => {
     const fetchTrips = async () => {
       const response = await fetch(
-        `http://localhost:3000/api/trips/search?text=${
-          searchParams.get("text") ?? ""
-        }&startDate=${searchParams.get("startDate")}&endDate=${searchParams.get(
-          "endDate"
-        )}&budget=${searchParams.get("budget")}&guests=${searchParams.get(
-          "guests"
-        )}`
+        `http://localhost:3000/api/trips/search?${
+          searchParams.get("quick") && "quick=true"
+        }&text=${searchParams.get("text")}&startDate=${searchParams.get(
+          "startDate"
+        )}&endDate=${searchParams.get("endDate")}&budget=${searchParams.get(
+          "budget"
+        )}&guests=${searchParams.get("guests")}`
       );
 
       const data = await response.json();

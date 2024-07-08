@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface SearchIconProps {
@@ -8,8 +9,15 @@ interface SearchIconProps {
 const SearchIcon = ({ url, title }: SearchIconProps) => {
   return (
     <div className="flex flex-col items-center gap-1">
-      <Image width={35} height={35} src={url} alt={title} />
-      <p className="text-sm text-grayPrimary">{title}</p>
+      <Link
+        href={`/trips/search?quick=true&text=${title}`}
+        className="flex flex-col items-center "
+      >
+        <Image width={35} height={35} src={url} alt={title} />
+        <p className="text-sm text-grayPrimary hover:text-primary hover:transition-all duration-200 ">
+          {title}
+        </p>
+      </Link>
     </div>
   );
 };
