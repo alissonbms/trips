@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { differenceInDays } from "date-fns";
+import { toast } from "react-toastify";
 
 interface TripReservationProps {
   tripId: string;
@@ -25,8 +26,6 @@ interface TripReservationForm {
   endDate: Date;
   startDate: Date;
 }
-
-const today = new Date();
 
 const TripReservation = ({
   tripId,
@@ -65,9 +64,19 @@ const TripReservation = ({
         message: "Esta data já esta reservada.",
       });
 
-      return setError("endDate", {
-        type: "manual",
-        message: "Esta data já esta reservada.",
+      return (
+        toast.error("Ocorreu um erro ao tentar reservar a viagem!", {
+          position: "bottom-center",
+        }),
+        setError("endDate", {
+          type: "manual",
+          message: "Esta data já esta reservada.",
+        })
+      );
+    } else if (res?.error) {
+      router.push("/");
+      return toast.error("Ocorreu um erro ao tentar reservar a viagem!", {
+        position: "bottom-center",
       });
     }
 
@@ -105,7 +114,7 @@ const TripReservation = ({
               selectsStart
               startDate={startDate}
               endDate={endDate}
-              minDate={today}
+              minDate={new Date()}
             />
           )}
         />
@@ -127,7 +136,7 @@ const TripReservation = ({
               selectsEnd
               startDate={startDate}
               endDate={endDate}
-              minDate={startDate ?? today}
+              minDate={startDate ?? new Date()}
               disabled={startDate ? false : true}
             />
           )}

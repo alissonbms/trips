@@ -14,9 +14,13 @@ interface UserReservationProps {
       trip: true;
     };
   }>;
+  fetchReservations: () => void;
 }
 
-const UserReservationItem = ({ reservation }: UserReservationProps) => {
+const UserReservationItem = ({
+  reservation,
+  fetchReservations,
+}: UserReservationProps) => {
   const router = useRouter();
 
   const { trip } = reservation;
@@ -39,14 +43,14 @@ const UserReservationItem = ({ reservation }: UserReservationProps) => {
       <div className="flex flex-col items-center justify-center">
         <p>Reserva de viagem até:</p>
         <span className="font-semibold">{reservation.trip.name}</span>
-        <p> cancelada com sucesso</p>
+        <p> cancelada com sucesso!</p>
       </div>,
       {
         position: "bottom-center",
       }
     );
 
-    router.refresh();
+    fetchReservations();
   };
   return (
     <div className="flex-flex-col p-5 mt-5 border border-solid border-grayLighter shadow-lg rounded-lg">
