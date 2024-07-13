@@ -94,7 +94,7 @@ const UserReservationItem = ({
         </div>
 
         <h3 className="text-sm mt-5">Hóspedes:</h3>
-        <p className="text-sm mt-1">{reservation.guests} hóspedes.</p>
+        <p className="text-sm mt-1">{reservation.guests} hóspede(s).</p>
       </div>
 
       <h3 className="font-semibold text-primaryDarker mt-3">

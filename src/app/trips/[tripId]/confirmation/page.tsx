@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import Button from "@/components/Button";
 import { Trip } from "@prisma/client";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
 
 const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   const { status, data } = useSession();
@@ -53,28 +54,37 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
   }
 
   const handleBuyClick = async () => {
-    const res = await fetch("http://localhost:3000/api/trips/reservation", {
+    const res = await fetch("http://localhost:3000/api/payment", {
       method: "POST",
       body: Buffer.from(
         JSON.stringify({
           tripId: params.tripId,
-          userId: (data?.user as any)?.id!,
           startDate: searchParams.get("startDate"),
           endDate: searchParams.get("endDate"),
           guests: Number(searchParams.get("guests")),
           totalPaid: totalPrice,
+          coverImage: trip.coverImage,
+          name: trip.name,
+          description: trip.description,
         })
       ),
     });
 
     if (!res.ok) {
-      return toast.error("Ocorreu um erro ao tentar realizar a reserva!", {
+      toast.error("Ocorreu um erro ao tentar realizar a reserva!", {
         position: "bottom-center",
       });
+
+      return router.push;
     }
 
-    router.push("/");
-    router.refresh();
+    const { sessionId } = await res.json();
+
+    const stripe = await loadStripe(
+      process.env.NEXT_PUBLIC_STRIPE_KEY as string
+    );
+
+    await stripe?.redirectToCheckout({ sessionId });
 
     toast.success("Reserva realizada com sucesso!", {
       position: "bottom-center",
@@ -129,7 +139,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
         </div>
 
         <h3 className="font-semibold mt-5">Hóspedes:</h3>
-        <p className="mt-1">{guests} hóspedes.</p>
+        <p className="mt-1">{guests} hóspede(s).</p>
 
         <Button className="mt-5" onClick={handleBuyClick}>
           Finalizar Compra

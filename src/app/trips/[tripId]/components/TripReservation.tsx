@@ -146,16 +146,16 @@ const TripReservation = ({
         {...register("guests", {
           required: {
             value: true,
-            message: "Número de hospedes é obrigatório",
+            message: "Número de hóspedes é obrigatório",
           },
           max: {
             value: maxGuests,
-            message: `Número máximo de hospedes é ${maxGuests}`,
+            message: `Número máximo de hóspedes é ${maxGuests}`,
           },
         })}
         error={!!errors?.guests}
         errorMessage={errors?.guests?.message}
-        placeholder={`Número de hospedes (max: ${maxGuests})`}
+        placeholder={`Número de hóspedes (max: ${maxGuests})`}
         className="mt-4"
         type="number"
       />
