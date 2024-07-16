@@ -44,6 +44,9 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
     };
 
     if (status === "unauthenticated") {
+      toast.warning("Você precisa estar logado para realizar tal ação!", {
+        position: "bottom-center",
+      });
       return router.push("/");
     }
 

@@ -30,7 +30,7 @@ const Header = () => {
   return (
     <div className="container mx-auto p-5 py-0 h-[93px] flex justify-between items-center">
       <Link href="/">
-        <div className="relative w-[250px] h-[55px]">
+        <div className="relative w-[220px] h-[50px]">
           <Image src="/logo.png" alt="tripstash" fill />
         </div>
       </Link>
@@ -38,7 +38,7 @@ const Header = () => {
       {status === "unauthenticated" && (
         <button
           onClick={handleLoginClick}
-          className=" px-4 py-2 border border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
+          className="px-2 py-2 border border-slate-200 rounded-xl text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
         >
           <div className=" flex items-center justify-center gap-2">
             <Image

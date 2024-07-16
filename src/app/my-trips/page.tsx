@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import UserReservationItem from "./components/UserReservationItem";
 import Button from "@/components/Button";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 const MyTrips = () => {
   const [reservations, setReservations] =
@@ -26,6 +27,9 @@ const MyTrips = () => {
 
   useEffect(() => {
     if (status === "unauthenticated") {
+      toast.warning("Você precisa estar logado para realizar tal ação!", {
+        position: "bottom-center",
+      });
       return router.push("/");
     }
 
