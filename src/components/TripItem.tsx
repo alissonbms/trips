@@ -28,7 +28,7 @@ const TripItem = ({ trip }: TripItemProps) => {
           <p className="text-xs text-grayPrimary">{trip.location}</p>
         </div>
         <p className="text-xs text-grayPrimary">
-          <span className="font-medium text-primary ">
+          <span className="font-bold text-primary ">
             R${trip.pricePerDay.toString()}
           </span>{" "}
           por dia

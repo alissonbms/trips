@@ -17,6 +17,8 @@
     "@prisma/client": "^5.14.0",
     "@stripe/stripe-js": "^4.1.0",
     "date-fns": "2.30.0",
+    "flowbite": "^2.4.1",
+    "flowbite-react": "^0.10.1",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
     "react": "^18",

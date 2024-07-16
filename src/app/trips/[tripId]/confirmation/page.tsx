@@ -29,6 +29,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
           tripId: params.tripId,
           startDate: searchParams.get("startDate"),
           endDate: searchParams.get("endDate"),
+          guests: searchParams.get("guests"),
         }),
       });
 
@@ -75,7 +76,7 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
         position: "bottom-center",
       });
 
-      return router.push;
+      return router.push("/");
     }
 
     const { sessionId } = await res.json();
@@ -85,10 +86,6 @@ const TripConfirmation = ({ params }: { params: { tripId: string } }) => {
     );
 
     await stripe?.redirectToCheckout({ sessionId });
-
-    toast.success("Reserva realizada com sucesso!", {
-      position: "bottom-center",
-    });
   };
 
   const startDate = new Date(searchParams.get("startDate") as string);

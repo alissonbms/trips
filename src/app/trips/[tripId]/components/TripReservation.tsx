@@ -89,6 +89,9 @@ const TripReservation = ({
 
   const startDate = watch("startDate");
   const endDate = watch("endDate");
+  const guests = watch("guests");
+  const dates =
+    differenceInDays(endDate, startDate) * pricePerDay + 1 * pricePerDay;
 
   return (
     <div className="flex flex-col px-5">
@@ -162,12 +165,7 @@ const TripReservation = ({
       <div className="flex justify-between mt-3">
         <p className="font-medium text-sm text-primaryDarker">Total: </p>
         <p className="font-medium text-sm text-primaryDarker">
-          {startDate && endDate
-            ? `R$${
-                differenceInDays(endDate, startDate) * pricePerDay +
-                1 * pricePerDay
-              }`
-            : "R$0"}
+          {startDate && endDate ? `R$${dates * guests}` : "R$0"}
         </p>
       </div>
       <div className="pb-10 border-b border-b-grayLighter w-full">
