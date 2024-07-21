@@ -1,15 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function GET(
-  _request: Request,
+  request: NextRequest,
   { params: { userId } }: { params: { userId: string } }
 ) {
   if (!userId) {
     return {
       status: 400,
       body: {
-        message: "Missing user id",
+        message: "Missing userId",
       },
     };
   }
