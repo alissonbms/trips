@@ -15,7 +15,7 @@ const Trips = () => {
   useEffect(() => {
     const fetchTrips = async () => {
       const response = await fetch(
-        `http://localhost:3000/api/trips/search?${
+        `/api/trips/search?${
           searchParams.get("quick") && "quick=true"
         }&text=${searchParams.get("text")}&startDate=${searchParams.get(
           "startDate"
