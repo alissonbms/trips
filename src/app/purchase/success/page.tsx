@@ -24,7 +24,7 @@ const PurchaseSuccess = () => {
           Tenha um bom proveito!
         </h2>
         <Image
-          src="/checkED.png"
+          src="/checked.png"
           alt="check icon, for purchase success"
           width={100}
           height={100}
