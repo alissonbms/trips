@@ -18,8 +18,8 @@ model Trip {
   id                  String            @id @default(uuid())
   name                String
   location            String
-  locationDescription String            @default("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.")
-  mapLocation         String            @default("")
+  locationDescription String
+  mapLocation         String
   startDate           DateTime
   endDate             DateTime
   pricePerDay         Decimal           @db.Decimal(8, 2)
