@@ -64,6 +64,7 @@ const TripSearch = () => {
             placeholder="Hóspedes?"
             {...register("guests")}
             type="number"
+            className="w-full"
           />
 
           <Controller
@@ -75,6 +76,7 @@ const TripSearch = () => {
                 onValueChange={field.onChange}
                 value={field.value}
                 onBlur={field.onBlur}
+                className="w-full"
               />
             )}
           />

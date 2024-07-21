@@ -28,10 +28,13 @@ const Header = () => {
   };
 
   return (
-    <div className="container mx-auto p-5 py-0 h-[93px] flex justify-between items-center">
+    <div className="container mx-auto p-5 py-0 h-[93px] flex justify-between items-center gap-12">
       <Link href="/">
-        <div className="relative w-[220px] h-[50px]">
-          <Image src="/logo.png" alt="tripstash" fill />
+        <div className="flex flex-col items-center justify-center leading-tight">
+          <h2 className="text-3xl text-primary font-bold">TRIPSTASH</h2>
+          <span className="text-grayPrimary text-sm">
+            let the details with us
+          </span>
         </div>
       </Link>
 
@@ -40,14 +43,14 @@ const Header = () => {
           onClick={handleLoginClick}
           className="px-2 py-2 border border-slate-200 rounded-xl text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150"
         >
-          <div className=" flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <Image
               src="https://www.svgrepo.com/show/475656/google-color.svg"
               alt="google logo"
-              width={14}
-              height={14}
+              width={20}
+              height={20}
             />
-            <span className="text-sm">Login com o Google</span>
+            <span className="text-sm text-grayPrimary">Login com o Google</span>
           </div>
         </button>
       )}
