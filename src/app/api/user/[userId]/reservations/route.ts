@@ -1,11 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 
 export async function GET(
-  request: NextRequest,
+  request: Request,
   { params: { userId } }: { params: { userId: string } }
-) {
+): Promise<any> {
   if (!userId) {
     return {
       status: 400,
