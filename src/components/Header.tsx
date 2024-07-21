@@ -24,7 +24,7 @@ const Header = () => {
 
   const router = useRouter();
   const handleMyTripsClick = () => {
-    router.push("my-trips");
+    router.push("/my-trips");
   };
 
   return (
@@ -79,7 +79,7 @@ const Header = () => {
               </span>
             </DropdownHeader>
             <DropdownItem icon={HiCurrencyDollar} onClick={handleMyTripsClick}>
-              <Link href="/my-trips">Minhas viagens</Link>
+              Minhas viagens
             </DropdownItem>
             <DropdownDivider />
             <DropdownItem icon={HiLogout} onClick={handleLogoutClick}>
