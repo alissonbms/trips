@@ -30,7 +30,7 @@ const TripLocation = ({
       <p className="text-sm text-primaryDarker font-semibold mt-7">
         {location}
       </p>
-      <p className="text-xs text-primaryDarker mt-2 mb-5 leading-5">
+      <p className="text-xs text-primaryDarker mt-2 leading-5">
         {locationDescription}
       </p>
     </div>

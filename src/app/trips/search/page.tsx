@@ -40,15 +40,15 @@ const Trips = () => {
 
   return (
     <div className="container mx-auto p-5 flex flex-col items-center ">
-      <h1 className="text-primaryDarker font-semibold text-xl">
+      <h1 className="text-primaryDarker font-semibold text-xl lg:text-[2.5rem]">
         Viagens Encontradas
       </h1>
-      <h2 className="text-grayPrimary font-medium mb-5 text-center">
+      <h2 className="text-grayPrimary font-medium mb-5 text-center lg:mt-6">
         {tripsFound.length > 0
           ? "Listamos as melhores viagens pra você!"
           : "Não encontramos nenhuma viagem de acordo com seus parâmetros =("}
       </h2>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 md:flex-row flex-wrap lg:gap-10 lg:mt-6 justify-center">
         {tripsFound.map((trip) => (
           <TripItem key={trip.id} trip={trip} />
         ))}
