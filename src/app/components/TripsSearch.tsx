@@ -41,25 +41,27 @@ const TripSearch = () => {
   const endDate = watch("endDate");
 
   return (
-    <div className="container mx-auto p-5 bg-search-background bg-cover bg-center bg-no-repeat">
-      <h1 className="text-2xl font-semibold text-primaryDarker text-center">
+    <div className="container mx-auto p-5 bg-search-background bg-cover bg-center bg-no-repeat lg:py-28">
+      <h1 className="text-2xl font-semibold text-primaryDarker text-center lg:text-[2.5rem]">
         Encontre sua próxima <span className="text-primary">viagem!</span>
       </h1>
 
-      <div className="flex flex-col gap-4 mt-5">
-        <Input
-          error={!!errors.text}
-          errorMessage={errors.text?.message}
-          placeholder="Onde você quer ir?"
-          {...register("text", {
-            required: {
-              value: true,
-              message: "Local é obrigatório",
-            },
-          })}
-        />
+      <div className="flex flex-col gap-4 mt-5 lg:max-w-[948px] lg:mt-12 lg:mx-auto lg:p-4 lg:bg-primary lg:bg-opacity-20 lg:rounded-xl">
+        <div className="grid grid-cols-2 lg:grid-cols-3 grid-rows-2 gap-4">
+          <div className="col-span-2 lg:col-span-1">
+            <Input
+              error={!!errors.text}
+              errorMessage={errors.text?.message}
+              placeholder="Onde você quer ir?"
+              {...register("text", {
+                required: {
+                  value: true,
+                  message: "Local é obrigatório",
+                },
+              })}
+            />
+          </div>
 
-        <div className="flex gap-4">
           <Input
             placeholder="Hóspedes?"
             {...register("guests")}
@@ -80,9 +82,6 @@ const TripSearch = () => {
               />
             )}
           />
-        </div>
-
-        <div className="flex gap-4">
           <Controller
             name="startDate"
             control={control}
@@ -133,9 +132,13 @@ const TripSearch = () => {
               />
             )}
           />
+          <Button
+            onClick={() => handleSubmit(onSubmit)()}
+            className="col-span-2 lg:col-span-1"
+          >
+            Buscar
+          </Button>
         </div>
-
-        <Button onClick={() => handleSubmit(onSubmit)()}>Buscar</Button>
       </div>
     </div>
   );

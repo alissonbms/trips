@@ -14,7 +14,7 @@ const SearchIcon = ({ url, title }: SearchIconProps) => {
         className="flex flex-col items-center "
       >
         <Image width={35} height={35} src={url} alt={title} />
-        <p className="text-sm text-grayPrimary hover:text-primary hover:transition-all duration-200 ">
+        <p className="text-sm lg:text-base text-grayPrimary hover:text-primary hover:transition-all duration-200 ">
           {title}
         </p>
       </Link>
