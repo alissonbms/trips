@@ -14,8 +14,10 @@ const TripLocation = ({
   locationDescription,
 }: TripLocationProps) => {
   return (
-    <div className="p-5">
-      <h2 className="text-primaryDarker font-semibold mb-5">Localização:</h2>
+    <div className="p-5 lg:p-0 lg:mt-12">
+      <h2 className="text-primaryDarker font-semibold mb-5 lg:text-xl">
+        Localização:
+      </h2>
       <div className="overflow-hidden relative h-0 pb-[50vh]">
         <iframe
           className="absolute left-0 top-0 border-0 h-[100%] w-[100%]"
@@ -27,10 +29,10 @@ const TripLocation = ({
         ></iframe>
       </div>
 
-      <p className="text-sm text-primaryDarker font-semibold mt-7">
+      <p className="text-sm text-primaryDarker font-semibold mt-7 lg:text-base">
         {location}
       </p>
-      <p className="text-xs text-primaryDarker mt-2 leading-5">
+      <p className="text-xs text-primaryDarker mt-2 leading-5 lg:text-sm">
         {locationDescription}
       </p>
     </div>
