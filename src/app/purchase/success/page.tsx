@@ -17,10 +17,10 @@ const PurchaseSuccess = () => {
   return (
     <div className="container mx-auto h-[100%] px-5">
       <div className="flex items-center justify-center flex-col gap-5 text-center h-[100%]">
-        <h1 className="text-primaryDarker text-2xl font-semibold">
+        <h1 className="text-primaryDarker text-2xl font-semibold lg:text-[2.5rem]">
           Sua viagem foi reservada com sucesso =)
         </h1>
-        <h2 className="text-grayPrimary text-xl font-semibold">
+        <h2 className="text-grayPrimary text-xl font-semibold lg:text-3xl">
           Tenha um bom proveito!
         </h2>
         <Image
@@ -31,7 +31,7 @@ const PurchaseSuccess = () => {
           objectFit="cover"
         />
         <Button className="p-3" onClick={handleButtonClick}>
-          Voltar para página inicial
+          <p className="text-base">Voltar para página inicial</p>
         </Button>
       </div>
     </div>

@@ -19,10 +19,10 @@ const PurchaseCancel = () => {
   return (
     <div className="container mx-auto h-[100%]">
       <div className="flex items-center justify-center flex-col gap-5 text-center h-[100%]">
-        <h1 className="text-primaryDarker text-2xl font-semibold">
+        <h1 className="text-primaryDarker text-2xl font-semibold lg:text-[2.5rem]">
           Parece que ocorreu um problema =(
         </h1>
-        <h2 className="text-grayPrimary text-xl font-semibold">
+        <h2 className="text-grayPrimary text-xl font-semibold lg:text-3xl">
           Não foi possível reservar sua viagem!
         </h2>
         <Image
@@ -33,7 +33,7 @@ const PurchaseCancel = () => {
           objectFit="cover"
         />
         <Button variant="danger" className="p-3" onClick={handleButtonClick}>
-          Voltar para página inicial
+          <p className="text-base">Voltar para página inicial</p>
         </Button>
       </div>
     </div>
