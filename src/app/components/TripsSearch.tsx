@@ -134,7 +134,7 @@ const TripSearch = () => {
           />
           <Button
             onClick={() => handleSubmit(onSubmit)()}
-            className="col-span-2 lg:col-span-1"
+            className="col-span-2 lg:col-span-1 lg:h-fit"
           >
             Buscar
           </Button>

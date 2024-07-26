@@ -39,11 +39,11 @@ const Trips = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-5 flex flex-col items-center ">
-      <h1 className="text-primaryDarker font-semibold text-xl lg:text-[2.5rem]">
-        Viagens Encontradas
+    <div className="container mx-auto p-5 flex flex-col items-center mt-4">
+      <h1 className="text-primaryDarker font-semibold text-xl lg:text-[2.5rem] lg:mt-4 mb-2">
+        Viagens encontradas:
       </h1>
-      <h2 className="text-grayPrimary font-medium mb-5 text-center lg:mt-6">
+      <h2 className="text-grayPrimary font-medium mb-5 text-center lg:mt-6 lg:text-base">
         {tripsFound.length > 0
           ? "Listamos as melhores viagens pra você!"
           : "Não encontramos nenhuma viagem de acordo com seus parâmetros =("}

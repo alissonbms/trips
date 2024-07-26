@@ -37,8 +37,8 @@ const MyTrips = () => {
   }, [status]);
 
   return (
-    <div className="container mx-auto p-5">
-      <h1 className="text-primaryDarker font-semibold text-xl md:text-center lg:text-2xl">
+    <div className="container mx-auto p-5 mt-4">
+      <h1 className="text-primaryDarker font-semibold text-xl text-center md:text-2xl">
         Minhas viagens:
       </h1>
       <div>
@@ -54,15 +54,21 @@ const MyTrips = () => {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col gap-4 mt-4">
-            <p className="text-primaryDarker text-xl">
-              Você ainda não tem nenhuma reserva =(
-            </p>
-            <Link href="/">
-              <Button variant="outlined" className="w-full">
-                Fazer reserva
+          <div className="container mx-auto">
+            <div className="flex items-center justify-center flex-col gap-5 text-center h-[50vh]">
+              <h1 className="text-primaryDarker text-2xl font-semibold lg:text-[1.8rem]">
+                Você ainda não tem nenhuma reserva...
+              </h1>
+              <h2 className="text-grayPrimary text-lg font-semibold lg:text-xl">
+                Não perca tempo! Desfrute de nossas viagens incríveis!
+              </h2>
+              <Button
+                className="p-3 w-[400px]"
+                onClick={() => router.push("/")}
+              >
+                <p className="text-base">Fazer reserva</p>
               </Button>
-            </Link>
+            </div>
           </div>
         )}
       </div>

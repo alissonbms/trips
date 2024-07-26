@@ -39,7 +39,7 @@ const TripDetails = async ({ params }: { params: { tripId: string } }) => {
   }
 
   return (
-    <div className="container mx-auto lg:px-40">
+    <div className="container mx-auto mt-4 lg:px-40">
       <TripHeader trip={trip} />
       <div className="flex flex-col lg:flex-row lg:mt-12 lg:gap-20">
         <div className="lg:order-2">
