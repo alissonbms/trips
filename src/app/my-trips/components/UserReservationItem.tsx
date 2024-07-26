@@ -3,10 +3,11 @@ import { Prisma } from "@prisma/client";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
 import ReactCountryFlag from "react-country-flag";
 import { toast } from "react-toastify";
+import { Button as _Button, Modal } from "flowbite-react";
+import { useState } from "react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 interface UserReservationProps {
   reservation: Prisma.TripReservationGetPayload<{
@@ -21,11 +22,12 @@ const UserReservationItem = ({
   reservation,
   fetchReservations,
 }: UserReservationProps) => {
-  const router = useRouter();
+  const [openModal, setOpenModal] = useState(false);
 
   const { trip } = reservation;
 
   const handleDeleteClick = async () => {
+    setOpenModal(false);
     const response = await fetch(`/api/trips/reservation/${reservation.id}`, {
       method: "DELETE",
     });
@@ -105,10 +107,34 @@ const UserReservationItem = ({
       <Button
         variant="danger"
         className=" w-full mt-5"
-        onClick={handleDeleteClick}
+        onClick={() => setOpenModal(true)}
       >
         Cancelar
       </Button>
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-5 text-lg font-semibold text-gray-500 dark:text-gray-400">
+              Você tem certeza que deseja cancelar essa reserva?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <_Button color="failure" onClick={handleDeleteClick}>
+                {"Sim, cancelar"}
+              </_Button>
+              <_Button color="gray" onClick={() => setOpenModal(false)}>
+                Não, voltar
+              </_Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

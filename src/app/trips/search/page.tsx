@@ -179,7 +179,7 @@ const Trips = () => {
           </Button>
         </div>
       </div>
-      <h1 className="text-primaryDarker font-semibold text-xl mb-2 mt-12 lg:text-3xl lg:mt-24 ">
+      <h1 className="text-primaryDarker font-semibold text-xl mb-2 mt-12 lg:text-3xl lg:mt-20 ">
         Viagens encontradas:
       </h1>
       <h2 className="text-grayPrimary font-medium mb-5 text-center lg:mt-3 lg:text-base">
